@@ -2,6 +2,10 @@ package com.calculator.exceptions;
 
 import com.calculator.validator.ErrorCodes;
 
+/**
+ * Validation exception class
+ *
+ */
 public class ValidationException extends Exception {
 
 	private ErrorCodes errorCodes;

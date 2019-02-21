@@ -19,6 +19,8 @@ import com.calculator.validator.ArithmeticValidator;
 public class Calculator {
 
 	public static void main(String[] args) {
+		ArithmeticValidator arithmeticValidator = new ArithmeticValidator();
+		CalculatorEngine calculatorEngine = new CalculatorEngine();
 		Scanner scanner = new Scanner(System.in);
 		List<String> expressions = new ArrayList<>();
 		List<String> results = new ArrayList<>();
@@ -32,8 +34,6 @@ public class Calculator {
 
 		// Evaluate the expression
 		Consumer<String> expressionConsumer = expression -> {
-			ArithmeticValidator arithmeticValidator = new ArithmeticValidator();
-			CalculatorEngine calculatorEngine = new CalculatorEngine();
 			try {
 				arithmeticValidator.validateExpression(expression);
 				results.add(String.valueOf(calculatorEngine.evaluate(expression.replaceAll("\\s", ""))));

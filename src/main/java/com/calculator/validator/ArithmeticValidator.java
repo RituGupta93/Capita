@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import com.calculator.exceptions.ValidationException;
 
 /**
- * @author mitu
+ * Validator class to validate the expressions.
  *
  */
 public class ArithmeticValidator implements Validator {
@@ -18,19 +18,6 @@ public class ArithmeticValidator implements Validator {
 	private static final Logger LOGGER = Logger.getLogger(ArithmeticValidator.class.getName());
 
 	private static final String regex = "\\d+";
-
-	public static void main(String args[]) {
-		ArithmeticValidator aritmeticValidator = new ArithmeticValidator();
-		try {
-			// 7+(67(56*2))
-			// 8*+7
-			// (8*5/8)-(3/1)-5
-			aritmeticValidator.validateExpression("(7+(67 + (56*2))");
-			System.out.println("valid");
-		} catch (ValidationException e) {
-			System.out.println("invalid");
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -55,7 +42,6 @@ public class ArithmeticValidator implements Validator {
 
 		for (int i = 0; i < expression.length(); i++) {
 			// System.out.println("For loop count: " + i);
-			System.out.println(expression.charAt(i));
 			if (expression.charAt(i) == '(') {
 				// System.out.println("( found");
 				unclosedParenthesis++;

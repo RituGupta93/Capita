@@ -1,24 +1,19 @@
 package com.calculator.engine;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
+/**
+ * Calculation engine to class to evaluate the expression.
+ *
+ */
 public class CalculatorEngine {
 
-	private static Map<String, Integer> precedence = new HashMap<>();
-
-	public int evaluate(String expression) {
-		precedence.put("^", 1);
-		precedence.put("/", 2);
-		precedence.put("*", 3);
-		precedence.put("+", 4);
-		precedence.put("-", 5);
+	public Double evaluate(String expression) {
 
 		char[] tokens = expression.toCharArray();
 
 		// Stack for numbers: 'values'
-		Stack<Integer> values = new Stack<Integer>();
+		Stack<Double> values = new Stack<>();
 
 		// Stack for Operators: 'ops'
 		Stack<Character> ops = new Stack<Character>();
@@ -37,8 +32,9 @@ public class CalculatorEngine {
 				while (j < tokens.length && tokens[j] >= '0' && tokens[j] <= '9') {
 					sbuf.append(tokens[j]);
 					j++;
+					i++;
 				}
-				values.push(Integer.parseInt(sbuf.toString()));
+				values.push(Double.valueOf(sbuf.toString()));
 			}
 
 			// Current token is an opening brace, push it to 'ops'
@@ -79,7 +75,11 @@ public class CalculatorEngine {
 	public static boolean hasPrecedence(char op1, char op2) {
 		if (op2 == '(' || op2 == ')')
 			return false;
-		if (precedence.get(Character.toString(op2)).compareTo(precedence.get(Character.toString(op1))) >= 0)
+		if ((op2 == '^'))
+			return true;
+		if ((op1 == '^'))
+			return false;
+		if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-'))
 			return false;
 		else
 			return true;
@@ -87,7 +87,7 @@ public class CalculatorEngine {
 
 	// A utility method to apply an operator 'op' on operands 'a'
 	// and 'b'. Return the result.
-	public static int applyOp(char op, int b, int a) {
+	public static double applyOp(char op, double b, double a) {
 		switch (op) {
 		case '+':
 			return a + b;
@@ -100,17 +100,9 @@ public class CalculatorEngine {
 				throw new UnsupportedOperationException("Cannot divide by zero");
 			return a / b;
 		case '^':
-			return (int) Math.pow(Double.valueOf(a), Double.valueOf(b));
+			return Math.pow(Double.valueOf(a), Double.valueOf(b));
 		}
-		return 0;
+		return 0d;
 	}
-
-	/*
-	 * // Driver method to test above methods public static void main(String[] args)
-	 * { System.out.println(CalculatorEngine.evaluate("10 + 2 * 6"));
-	 * System.out.println(CalculatorEngine.evaluate("100 * 2 + 12"));
-	 * System.out.println(CalculatorEngine.evaluate("100 * ( 2 + 12 )"));
-	 * System.out.println(CalculatorEngine.evaluate("100 * ( 2 + 12 ) / 14")); }
-	 */
 
 }
